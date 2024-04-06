@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Human-Typer (Dev Channel) - Google Docs & Slides
-// @version      0.3.0a
+// @version      0.3.1a
 // @description  Types your text in a human-like manner with deletions and edits so the edit history shows a more realistic progress. (Fork of (Ace)³dx) 
 // @author       Kap
 // @match        https://docs.google.com/*
@@ -68,8 +68,8 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
         textField.style.resize = "vertical";
 
         const description = document.createElement("p");
-        description.textContent = "It's necessary to keep this tab open; otherwise, the script will pause and will resume once you return to it (this behavior is caused by the way the browser functions). Lower bound is the minimum time in milliseconds per character. Upper bound is the maximum time in milliseconds per character. A random delay value will be selected between these bounds for every character in your text, ensuring that the typing appears natural and human-like.";
-        description.style.fontSize = "14px";
+        description.textContent = "DEVELOPMENT VERSION";
+        description.style.fontSize = "24px";
         description.style.marginBottom = "15px";
 
         const randomDelayLabel = document.createElement("div");
