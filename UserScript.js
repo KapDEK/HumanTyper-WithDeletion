@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Human-Typer (Dev Channel) - Google Docs & Slides
-// @version      0.3.0.1a
+// @version      0.3.0.2a
 // @description  Types your text in a human-like manner with deletions and edits so the edit history shows a more realistic progress. (Fork of (Ace)³dx) 
 // @author       Kap
 // @match        https://docs.google.com/*
@@ -118,7 +118,7 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
         overlay.appendChild(confirmButton);
         document.body.appendChild(overlay);
 
-        return new Promise((resolve) => {
+         return new Promise((resolve) => {
     const updateRandomDelayLabel = () => {
       const charCount = textField.value.length;
       const etaLowerBound = Math.ceil((charCount * parseInt(lowerBoundInput.value)) / 60000);
