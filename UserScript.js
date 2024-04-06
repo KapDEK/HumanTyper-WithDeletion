@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Human-Typer (With Deletion) - Google Docs & Slides
-// @version      0.2.1
-// @description  Types your text in a human-like manner with deletions and edits so the edit history shows a more realistic progress.
+// @version      0.2.2
+// @description  Types your text in a human-like manner with deletions and edits so the edit history shows a more realistic progress. (Fork of (Ace)³dx) 
 // @author       Kap
 // @match        https://docs.google.com/*
 // @icon         https://i.imgur.com/z2gxKWZ.png
