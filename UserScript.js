@@ -119,12 +119,19 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
         document.body.appendChild(overlay);
 
         return new Promise((resolve) => {
-            const updateRandomDelayLabel = () => {
-                const charCount = textField.value.length;
-                const etaLowerBound = Math.ceil((charCount * parseInt(lowerBoundInput.value)) / 60000);
-                const etaUpperBound = Math.ceil((charCount * parseInt(upperBoundInput.value)) / 60000);
-                randomDelayLabel.textContent = `ETA: ${etaLowerBound} - ${etaUpperBound} minutes`;
-            };
+    const updateRandomDelayLabel = () => {
+      const charCount = textField.value.length;
+      const etaLowerBound = Math.ceil((charCount * parseInt(lowerBoundInput.value)) / 60000);
+      const etaUpperBound = Math.ceil((charCount * parseInt(upperBoundInput.value)) / 60000);
+
+      // Calculate the additional time for deletions and rewriting
+      const deletionTime = Math.ceil((charCount * deleteThreshold * (upperBoundValue * 2)) / 60000);
+      const rewritingTime = Math.ceil((charCount * deleteThreshold * (upperBoundValue + lowerBoundValue) / 2) / 60000);
+      const additionalTime = deletionTime + rewritingTime;
+
+      // Update the ETA label with the additional time
+      randomDelayLabel.textContent = `ETA: ${etaLowerBound + additionalTime} - ${etaUpperBound + additionalTime} minutes`;
+    };
 
             const handleCancelClick = () => {
                 cancelTyping = true;
