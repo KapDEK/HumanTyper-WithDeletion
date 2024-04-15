@@ -1,6 +1,15 @@
 // ==UserScript==
 // @name         Human-Typer (Dev Channel) - Google Docs & Slides
-// @version      0.3.0.2a
+// @version      0.3.0.3a
+// @description  !!DEV CHANNEL!! This Dev Build WILL be extremely buggy and downright non functional most of the time. (Fork of (Ace)³dx) 
+// @author       Kap
+// @match        https://docs.google.com/*
+// @icon         https://i.imgur.com/z2gxKWZ.png
+// ==/UserScript==
+
+// ==UserScript==
+// @name         Human-Typer (With Deletion) - Google Docs & Slides
+// @version      0.2.3
 // @description  Types your text in a human-like manner with deletions and edits so the edit history shows a more realistic progress. (Fork of (Ace)³dx) 
 // @author       Kap
 // @match        https://docs.google.com/*
@@ -39,6 +48,7 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
     let typingInProgress = false;
     let lowerBoundValue = 60;
     let upperBoundValue = 140;
+    let deletionFrequency = 0.01;
 
     function showOverlay() {
         const overlay = document.createElement("div");
@@ -68,8 +78,8 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
         textField.style.resize = "vertical";
 
         const description = document.createElement("p");
-        description.textContent = "DEVELOPMENT VERSION";
-        description.style.fontSize = "24px";
+        description.textContent = "It's necessary to keep this tab open; otherwise, the script will pause and will resume once you return to it (this behavior is caused by the way the browser functions). Lower bound is the minimum time in milliseconds per character. Upper bound is the maximum time in milliseconds per character. A random delay value will be selected between these bounds for every character in your text, ensuring that the typing appears natural and human-like.";
+        description.style.fontSize = "14px";
         description.style.marginBottom = "15px";
 
         const randomDelayLabel = document.createElement("div");
@@ -97,6 +107,19 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
         upperBoundInput.style.border = "1px solid #ccc";
         upperBoundInput.style.borderRadius = "4px";
 
+        const deletionFrequencyLabel = document.createElement("label");
+        deletionFrequencyLabel.textContent = "Deletion Frequency: ";
+        const deletionFrequencySlider = document.createElement("input");
+        deletionFrequencySlider.type = "range";
+        deletionFrequencySlider.min = "0.001";
+        deletionFrequencySlider.max = "0.1";
+        deletionFrequencySlider.step = "0.001";
+        deletionFrequencySlider.value = deletionFrequency;
+        deletionFrequencySlider.style.width = "100%";
+
+        const deletionFrequencyValue = document.createElement("span");
+        deletionFrequencyValue.textContent = deletionFrequency.toFixed(3);
+
         const confirmButton = document.createElement("button");
         confirmButton.textContent = textField.value.trim() === "" ? "Cancel" : "Confirm";
         confirmButton.style.padding = "8px 16px";
@@ -114,24 +137,23 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
         overlay.appendChild(lowerBoundInput);
         overlay.appendChild(upperBoundLabel);
         overlay.appendChild(upperBoundInput);
+        overlay.appendChild(deletionFrequencyLabel);
+        overlay.appendChild(deletionFrequencySlider);
+        overlay.appendChild(deletionFrequencyValue);
         overlay.appendChild(document.createElement("br"));
         overlay.appendChild(confirmButton);
         document.body.appendChild(overlay);
 
-         return new Promise((resolve) => {
-    const updateRandomDelayLabel = () => {
-      const charCount = textField.value.length;
-      const etaLowerBound = Math.ceil((charCount * parseInt(lowerBoundInput.value)) / 60000);
-      const etaUpperBound = Math.ceil((charCount * parseInt(upperBoundInput.value)) / 60000);
-
-      // Calculate the additional time for deletions and rewriting
-      const deletionTime = Math.ceil((charCount * deleteThreshold * (upperBoundValue * 2)) / 60000);
-      const rewritingTime = Math.ceil((charCount * deleteThreshold * (upperBoundValue + lowerBoundValue) / 2) / 60000);
-      const additionalTime = deletionTime + rewritingTime;
-
-      // Update the ETA label with the additional time
-      randomDelayLabel.textContent = `ETA: ${etaLowerBound + additionalTime} - ${etaUpperBound + additionalTime} minutes`;
-    };
+        return new Promise((resolve) => {
+            const updateRandomDelayLabel = () => {
+                const charCount = textField.value.length;
+                const avgTypingDelay = (parseInt(lowerBoundInput.value) + parseInt(upperBoundInput.value)) / 2;
+                const avgDeletionDelay = avgTypingDelay;
+                const deletionCount = Math.floor(charCount * parseFloat(deletionFrequencySlider.value));
+                const etaLowerBound = Math.ceil(((charCount + deletionCount) * avgTypingDelay) / 60000);
+                const etaUpperBound = Math.ceil(((charCount + deletionCount) * avgDeletionDelay) / 60000);
+                randomDelayLabel.textContent = `ETA: ${etaLowerBound} - ${etaUpperBound} minutes`;
+            };
 
             const handleCancelClick = () => {
                 cancelTyping = true;
@@ -142,6 +164,7 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
                 const userInput = textField.value.trim();
                 lowerBoundValue = parseInt(lowerBoundInput.value);
                 upperBoundValue = parseInt(upperBoundInput.value);
+                deletionFrequency = parseFloat(deletionFrequencySlider.value);
 
                 if (userInput === "") {
                     document.body.removeChild(overlay);
@@ -163,6 +186,10 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
 
             lowerBoundInput.addEventListener("input", updateRandomDelayLabel);
             upperBoundInput.addEventListener("input", updateRandomDelayLabel);
+            deletionFrequencySlider.addEventListener("input", () => {
+                deletionFrequencyValue.textContent = deletionFrequencySlider.value;
+                updateRandomDelayLabel();
+            });
 
             stopButton.addEventListener("click", handleCancelClick);
         });
@@ -262,7 +289,6 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
             }
 
             async function typeStringWithRandomDelay(inputElement, string) {
-                const deleteThreshold = 0.01; // Adjust this value to control the frequency of deletions
                 const randomSentences = [
                     "I think this sentence might work...",
                     "Let me try typing this instead...",
@@ -282,7 +308,7 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
                     const randomTypingDelay = Math.floor(Math.random() * (upperBoundValue - lowerBoundValue + 1)) + lowerBoundValue;
                     const randomDeletionDelay = Math.floor(Math.random() * (upperBoundValue - lowerBoundValue + 1)) + lowerBoundValue;
 
-                    if (Math.random() < deleteThreshold && typedText.length > 0) {
+                    if (Math.random() < deletionFrequency && typedText.length > 0) {
                         // Pause typing and perform deletion
                         await new Promise((resolve) => setTimeout(resolve, randomDeletionDelay));
 
@@ -319,7 +345,8 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
                         }
 
                         // Type the deleted words
-                        for (let j = 0; j < deletedWords.length; j++) {
+
+                       for (let j = 0; j < deletedWords.length; j++) {
                             if (cancelTyping) {
                                 break; // Stop typing the deleted words if cancelTyping is set to true
                             }
@@ -338,7 +365,6 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
                 typingInProgress = false;
                 stopButton.style.display = "none";
             }
-
 
             typeStringWithRandomDelay(input, userInput);
         }
