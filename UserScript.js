@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Human-Typer (Dev Channel) - Google Docs & Slides
-// @version      0.3.0.3a
+// @version      0.3.0.4a
 // @description  !!DEV CHANNEL!! This Dev Build WILL be extremely buggy and downright non functional most of the time. (Fork of (Ace)³dx) 
 // @author       Kap
 // @match        https://docs.google.com/*
@@ -148,7 +148,7 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
             const updateRandomDelayLabel = () => {
                 const charCount = textField.value.length;
                 const avgTypingDelay = (parseInt(lowerBoundInput.value) + parseInt(upperBoundInput.value)) / 2;
-                const avgDeletionDelay = avgTypingDelay;
+                const avgDeletionDelay = (parseInt(lowerBoundInput.value) + parseInt(upperBoundInput.value)) / 2;
                 const deletionCount = Math.floor(charCount * parseFloat(deletionFrequencySlider.value));
                 const etaLowerBound = Math.ceil(((charCount + deletionCount) * avgTypingDelay) / 60000);
                 const etaUpperBound = Math.ceil(((charCount + deletionCount) * avgDeletionDelay) / 60000);
