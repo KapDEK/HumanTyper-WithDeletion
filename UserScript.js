@@ -162,6 +162,7 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
                 const etaUp = Math.ceil(totalTime / 60000);
                 randomDelayLabel.textContent = `ETA: ${etaUp} - ${etaDown minutes`;
             };
+        };
 
 
             const handleCancelClick = () => {
