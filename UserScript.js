@@ -7,8 +7,6 @@
 // @icon         https://i.imgur.com/z2gxKWZ.png
 // ==/UserScript==
 
-const ver = "0.3.0.6";
-    
 if (window.location.href.includes("docs.google.com/document/d") || window.location.href.includes("docs.google.com/presentation/d")) {
     console.log("Document opened, Human-Typer available!");
 
@@ -71,7 +69,7 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
         textField.style.resize = "vertical";
 
      const versionIndecator = document.createElement("p");
-        versionIndecator.textContent = ver;
+        versionIndecator.textContent = "0.3.0.6";
         versionIndecator.style.fontSize = "8px";
         versionIndecator.style.color = "gray";
         versionIndecator.style.position = "absolute";
