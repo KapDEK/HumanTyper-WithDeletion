@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Human-Typer (Dev Channel) - Google Docs & Slides
-// @version      0.3.0.5b
+// @version      0.3.0.5c
 // @description  !!DEV CHANNEL!! This Dev Build WILL be extremely buggy and downright non functional most of the time. (Fork of (Ace)³dx) 
 // @author       Kap
 // @match        https://docs.google.com/*
@@ -42,20 +42,30 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
     let deletionFrequency = 0.01;
 
     function showOverlay() {
-        const overlay = document.createElement("div");
-        overlay.style.position = "fixed";
-        overlay.style.top = "50%";
-        overlay.style.left = "50%";
-        overlay.style.transform = "translate(-50%, -50%)";
-        overlay.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
-        overlay.style.padding = "20px";
-        overlay.style.borderRadius = "8px";
-        overlay.style.boxShadow = "0px 2px 10px rgba(0, 0, 0, 0.1)";
-        overlay.style.zIndex = "9999";
-        overlay.style.display = "flex";
-        overlay.style.flexDirection = "column";
-        overlay.style.alignItems = "center";
-        overlay.style.width = "320px";
+    const overlay = document.createElement("div");
+    overlay.style.position = "fixed";
+    overlay.style.top = "50%";
+    overlay.style.left = "50%";
+    overlay.style.transform = "translate(-50%, -50%)";
+    overlay.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+    overlay.style.padding = "20px";
+    overlay.style.borderRadius = "8px";
+    overlay.style.boxShadow = "0px 2px 10px rgba(0, 0, 0, 0.1)";
+    overlay.style.zIndex = "9999";
+    overlay.style.display = "flex";
+    overlay.style.flexDirection = "column";
+    overlay.style.alignItems = "center";
+    overlay.style.width = "320px";
+
+   
+    const versionIndicator = document.createElement("span");
+    versionIndicator.textContent = "Version 0.3.0.5c"; // Update this as needed
+    versionIndicator.style.fontSize = "8px";
+    versionIndicator.style.color = "gray";
+    versionIndicator.style.position = "absolute";
+    versionIndicator.style.bottom = "10px";
+    versionIndicator.style.right = "10px";
+    overlay.appendChild(versionIndicator);
 
         const textField = document.createElement("textarea");
         textField.rows = "5";
@@ -67,15 +77,7 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
         textField.style.border = "1px solid #ccc";
         textField.style.borderRadius = "4px";
         textField.style.resize = "vertical";
-        
-        const versionIndecator = document.createElement("p");
-         versionIndecator.textContent = "0.3.0.5b";
-         versionIndecator.style.fontSize = "8px";
-         versionIndecator.style.color = "gray";
-         versionIndecator.style.position = "absolute";
-         versionIndecator.style.marginBottom = "0";
-         versionIndecator.style.marginRight = "0";
-
+    
         const description = document.createElement("p");
         description.textContent = "It's necessary to keep this tab open; otherwise, the script will pause and will resume once you return to it (this behavior is caused by the way the browser functions). Lower bound is the minimum time in milliseconds per character. Upper bound is the maximum time in milliseconds per character. A random delay value will be selected between these bounds for every character in your text, ensuring that the typing appears natural and human-like.";
         description.style.fontSize = "14px";
