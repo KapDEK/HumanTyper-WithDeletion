@@ -163,7 +163,6 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
                 randomDelayLabel.textContent = `ETA: ${etaUp} - ${etaDown minutes`;
             };
 
-        };
 
             const handleCancelClick = () => {
                 cancelTyping = true;
