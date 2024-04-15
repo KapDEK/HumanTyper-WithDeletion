@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Human-Typer (Dev Channel) - Google Docs & Slides
-// @version      0.3.0.5c
+// @version      0.3.0.6a
 // @description  !!DEV CHANNEL!! This Dev Build WILL be extremely buggy and downright non functional most of the time. (Fork of (Ace)³dx) 
 // @author       Kap
 // @match        https://docs.google.com/*
@@ -59,7 +59,7 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
 
    
     const versionIndicator = document.createElement("span");
-    versionIndicator.textContent = "Version 0.3.0.5c"; // Update this as needed
+    versionIndicator.textContent = "Version 0.3.0.6a"; // Update this as needed
     versionIndicator.style.fontSize = "8px";
     versionIndicator.style.color = "gray";
     versionIndicator.style.position = "absolute";
@@ -145,16 +145,23 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
         overlay.appendChild(confirmButton);
         document.body.appendChild(overlay);
 
-        return new Promise((resolve) => {
-            const updateRandomDelayLabel = () => {
-                const charCount = textField.value.length;
-                const avgTypingDelay = (parseInt(lowerBoundInput.value) + parseInt(upperBoundInput.value)) / 2;
-                const avgDeletionDelay = (parseInt(lowerBoundInput.value) + parseInt(upperBoundInput.value)) / 2;
-                const deletionCount = Math.floor(charCount * parseFloat(deletionFrequencySlider.value));
-                const etaLowerBound = Math.ceil(((charCount + deletionCount) * avgTypingDelay) / 60000);
-                const etaUpperBound = Math.ceil(((charCount + deletionCount) * avgDeletionDelay) / 60000);
-                randomDelayLabel.textContent = `ETA: ${etaLowerBound} - ${etaUpperBound} minutes`;
-            };
+        function updateRandomDelayLabel() {
+    const charCount = textField.value.length;
+    const avgTypingDelay = (parseInt(lowerBoundInput.value) + parseInt(upperBoundInput.value)) / 2;
+    const deletionCount = Math.floor(charCount * parseFloat(deletionFrequencySlider.value));
+
+    // Calculate time for typing and deleting
+    const totalTypingTime = charCount * avgTypingDelay;
+    const totalDeletionTime = deletionCount * avgTypingDelay; // Assuming same delay for typing and deletion
+
+    // Total time for all operations
+    const totalTime = totalTypingTime + totalDeletionTime;
+
+    // Convert time from milliseconds to minutes for display
+    const totalMinutes = Math.ceil(totalTime / 60000);
+
+    randomDelayLabel.textContent = `ETA: Approximately ${totalMinutes} minutes`;
+}
 
             const handleCancelClick = () => {
                 cancelTyping = true;
