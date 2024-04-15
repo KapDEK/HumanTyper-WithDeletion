@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Human-Typer (Dev Channel) - Google Docs & Slides
-// @version      0.3.0.5a
+// @version      0.3.0.6a
 // @description  !!DEV CHANNEL!! This Dev Build WILL be extremely buggy and downright non functional most of the time. (Fork of (Ace)³dx) 
 // @author       Kap
 // @match        https://docs.google.com/*
