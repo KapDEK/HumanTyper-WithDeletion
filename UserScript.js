@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Human-Typer (Dev Channel) - Google Docs & Slides
-// @version      0.3.0.6a
+// @version      0.3.0.5a
 // @description  !!DEV CHANNEL!! This Dev Build WILL be extremely buggy and downright non functional most of the time. (Fork of (Ace)³dx) 
 // @author       Kap
 // @match        https://docs.google.com/*
@@ -67,15 +67,14 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
         textField.style.border = "1px solid #ccc";
         textField.style.borderRadius = "4px";
         textField.style.resize = "vertical";
-
-     const versionIndecator = document.createElement("p");
-        versionIndecator.textContent = "0.3.0.6";
-        versionIndecator.style.fontSize = "8px";
-        versionIndecator.style.color = "gray";
-        versionIndecator.style.position = "absolute";
-        versionIndecator.style.bottom = "0";
-        versionIndecator.style.right = "0";
         
+        const versionIndecator = document.createElement("p");
+     versionIndecator.textContent = "0.3.0.5a";
+     versionIndecator.style.fontSize = "8px";
+     versionIndecator.style.color = "gray";
+     versionIndecator.style.position = "absolute";
+     versionIndecator.style.bottom = "0";
+     versionIndecator.style.right = "0";
 
         const description = document.createElement("p");
         description.textContent = "It's necessary to keep this tab open; otherwise, the script will pause and will resume once you return to it (this behavior is caused by the way the browser functions). Lower bound is the minimum time in milliseconds per character. Upper bound is the maximum time in milliseconds per character. A random delay value will be selected between these bounds for every character in your text, ensuring that the typing appears natural and human-like.";
@@ -152,18 +151,8 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
                 const deletionCount = Math.floor(charCount * parseFloat(deletionFrequencySlider.value));
                 const etaLowerBound = Math.ceil(((charCount + deletionCount) * avgTypingDelay) / 60000);
                 const etaUpperBound = Math.ceil(((charCount + deletionCount) * avgDeletionDelay) / 60000);
-                const totalTypingTime = charCount * avgTypingDelay;
-                const totalDeletionTime = deletionCount * avgDeletionDelay;
-                const totalRewriteTime = rewriteCount * avgTypingDelay;
-                const totalRedeletionTime = redeletionCount * avgDeletionDelay;
-                const totalReaddingTime = readdingCount * avgTypingDelay;
-                const totalTime = totalTypingTime + totalDeletionTime + totalRewriteTime + totalRedeletionTime + totalReaddingTime;
-                const etaDown = Math.ceil(totalTime / 60000);
-                const etaUp = Math.ceil(totalTime / 60000);
-                randomDelayLabel.textContent = `ETA: ${etaUp} - ${etaDown minutes`;
+                randomDelayLabel.textContent = `ETA: ${etaLowerBound} - ${etaUpperBound} minutes`;
             };
-        };
-
 
             const handleCancelClick = () => {
                 cancelTyping = true;
