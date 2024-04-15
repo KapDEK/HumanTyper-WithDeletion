@@ -7,15 +7,6 @@
 // @icon         https://i.imgur.com/z2gxKWZ.png
 // ==/UserScript==
 
-// ==UserScript==
-// @name         Human-Typer (With Deletion) - Google Docs & Slides
-// @version      0.2.3
-// @description  Types your text in a human-like manner with deletions and edits so the edit history shows a more realistic progress. (Fork of (Ace)³dx) 
-// @author       Kap
-// @match        https://docs.google.com/*
-// @icon         https://i.imgur.com/z2gxKWZ.png
-// ==/UserScript==
-
 if (window.location.href.includes("docs.google.com/document/d") || window.location.href.includes("docs.google.com/presentation/d")) {
     console.log("Document opened, Human-Typer available!");
 
