@@ -161,7 +161,7 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
         const totalMinutes = Math.ceil(totalTime / 60000);
 
         randomDelayLabel.textContent = `ETA: Approximately ${totalMinutes} minutes`;
-}
+};
 
             const handleCancelClick = () => {
                 cancelTyping = true;
@@ -201,7 +201,7 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
 
             stopButton.addEventListener("click", handleCancelClick);
         });
-    }
+    };
 
     humanTyperButton.addEventListener("mouseenter", () => {
         humanTyperButton.classList.add("goog-control-hover");
