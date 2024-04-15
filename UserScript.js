@@ -7,7 +7,7 @@
 // @icon         https://i.imgur.com/z2gxKWZ.png
 // ==/UserScript==
 
-const ver = 0.3.0.5a
+const ver = "0.3.0.6a"
 
 if (window.location.href.includes("docs.google.com/document/d") || window.location.href.includes("docs.google.com/presentation/d")) {
     console.log("Document opened, Human-Typer available!");
