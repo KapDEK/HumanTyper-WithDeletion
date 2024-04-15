@@ -8,7 +8,6 @@
 // ==/UserScript==
 
 const ver = 0.3.0.6;
-
 if (window.location.href.includes("docs.google.com/document/d") || window.location.href.includes("docs.google.com/presentation/d")) {
     console.log("Document opened, Human-Typer available!");
 
