@@ -146,22 +146,22 @@ if (window.location.href.includes("docs.google.com/document/d") || window.locati
         document.body.appendChild(overlay);
 
         function updateRandomDelayLabel() {
-        	const charCount = textField.value.length;
-        	const avgTypingDelay = (parseInt(lowerBoundInput.value) + parseInt(upperBoundInput.value)) / 2;
-        	const deletionCount = Math.floor(charCount * parseFloat(deletionFrequencySlider.value));
+    const charCount = textField.value.length;
+    const avgTypingDelay = (parseInt(lowerBoundInput.value) + parseInt(upperBoundInput.value)) / 2;
+    const deletionCount = Math.floor(charCount * parseFloat(deletionFrequencySlider.value));
 
     // Calculate time for typing and deleting
-        	const totalTypingTime = charCount * avgTypingDelay;
-        	const totalDeletionTime = deletionCount * avgTypingDelay; // Assuming same delay for typing and deletion
+    const totalTypingTime = charCount * avgTypingDelay;
+    const totalDeletionTime = deletionCount * avgTypingDelay; // Assuming same delay for typing and deletion
 
     // Total time for all operations
-        	const totalTime = totalTypingTime + totalDeletionTime;
+    const totalTime = totalTypingTime + totalDeletionTime;
 
     // Convert time from milliseconds to minutes for display
-        	const totalMinutes = Math.ceil(totalTime / 60000);
+    const totalMinutes = Math.ceil(totalTime / 60000);
 
-        	randomDelayLabel.textContent = `ETA: Approximately ${totalMinutes} minutes`;
-};
+    randomDelayLabel.textContent = `ETA: Approximately ${totalMinutes} minutes`;
+}
 
             const handleCancelClick = () => {
                 cancelTyping = true;
